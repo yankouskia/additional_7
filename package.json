@@ -1,0 +1,22 @@
+{
+  "name": "sudoku",
+  "version": "1.0.0",
+  "description": "Sudoku",
+  "main": "test.js",
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yankouskia/additional_7.git"
+  },
+  "author": "yankouskia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yankouskia/additional_7/issues"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  },
+  "homepage": "https://github.com/yankouskia/additional_7#readme"
+}
