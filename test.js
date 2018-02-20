@@ -1,4 +1,5 @@
 const assert = require('assert');
+Object.freeze(assert);
 const solveSudoku = require('./src/index.js');
 
 function isSolved(initial, sudoku) {
