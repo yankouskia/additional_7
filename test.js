@@ -6,15 +6,26 @@ Object.freeze(Array.prototype);
 
 const solveSudoku = require('./src/index.js');
 
+function getCopy(matrix) {
+  return matrix.map(row => [...row]);
+}
+
 function isSolved(initial, sudoku) {
+  if (sudoku.some(row => row.some(element => typeof element !== 'number' || (element < 1 || element > 9)))) {
+    return false;
+  }
+
   for (let i = 0; i < 9; i++) {
     let [r,c] = [Math.floor(i/3)*3,(i%3)*3];
     if (
         (sudoku[i].reduce((s,v)=>s.add(v),new Set()).size != 9) ||
         (sudoku.reduce((s,v)=>s.add(v[i]),new Set()).size != 9) ||
         (sudoku.slice(r,r+3).reduce((s,v)=>v.slice(c,c+3).reduce((s,v)=>s.add(v),s),new Set()).size != 9)
-      ) return false;
+      ) {
+        return false;
+      }
   }
+
   return initial.every((row, rowIndex) => {
     return row.every((num, colIndex) => {
       return num === 0 || sudoku[rowIndex][colIndex] === num;
@@ -34,8 +45,11 @@ it('should solveSudoku 1', () => {
     [2, 8, 7, 4, 1, 9, 6, 3, 5],
     [3, 4, 5, 2, 8, 6, 1, 7, 9]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku 2', () => {
@@ -50,8 +64,11 @@ it('should solveSudoku 2', () => {
     [0, 0, 7, 0, 0, 0, 0, 5, 0],
     [1, 6, 5, 3, 9, 0, 4, 7, 0]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku 3', () => {
@@ -66,8 +83,11 @@ it('should solveSudoku 3', () => {
     [0, 0, 0, 0, 0, 7, 0, 0, 0],
     [1, 6, 7, 0, 0, 2, 5, 4, 0]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku 4', () => {
@@ -82,8 +102,11 @@ it('should solveSudoku 4', () => {
     [0, 5, 0, 4, 0, 0, 0, 0, 0],
     [1, 0, 6, 2, 0, 0, 0, 5, 0]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku 5', () => {
@@ -98,8 +121,11 @@ it('should solveSudoku 5', () => {
     [0, 6, 7, 0, 3, 9, 5, 0, 8],
     [1, 0, 5, 0, 8, 0, 0, 0, 0]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku 6', () => {
@@ -114,8 +140,11 @@ it('should solveSudoku 6', () => {
     [3, 0, 0, 1, 0, 9, 0, 7, 0],
     [1, 2, 0, 0, 0, 6, 0, 4, 9]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku 7', () => {
@@ -130,8 +159,11 @@ it('should solveSudoku 7', () => {
     [2, 6, 0, 0, 0, 0, 1, 0, 4],
     [0, 0, 0, 0, 2, 6, 5, 0, 0]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku 8', () => {
@@ -146,8 +178,11 @@ it('should solveSudoku 8', () => {
     [4, 5, 7, 1, 0, 8, 2, 3, 6],
     [1, 3, 0, 4, 0, 7, 0, 0, 0]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku hard 1', () => {
@@ -162,8 +197,11 @@ it('should solveSudoku hard 1', () => {
     [0, 4, 0, 8, 0, 0, 0, 0, 9],
     [0, 0, 0, 0, 0, 3, 0, 1, 0]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku hard 2', () => {
@@ -178,8 +216,11 @@ it('should solveSudoku hard 2', () => {
     [0, 0, 0, 0, 0, 0, 2, 9, 0],
     [6, 0, 0, 7, 0, 0, 3, 0, 0]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku hard 3', () => {
@@ -194,8 +235,11 @@ it('should solveSudoku hard 3', () => {
     [0, 0, 0, 8, 1, 0, 0, 6, 3],
     [8, 0, 0, 0, 0, 3, 0, 0, 0]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
 
 it('should solveSudoku very hard', () => {
@@ -210,6 +254,9 @@ it('should solveSudoku very hard', () => {
     [0, 0, 7, 3, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 5, 0, 0]
   ];
-  const copy = initial.map(r => [...r]);
-  assert.equal(isSolved(initial, solveSudoku(copy)), true);
+  const copy = getCopy(initial);
+
+  const solvedSudoku = solveSudoku(copy);
+
+  assert.ok(isSolved(initial, solvedSudoku));
 });
